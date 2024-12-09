@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FBFBFB">
+    android:background="@color/fondo">
 
     <EditText
         android:id="@+id/correoText"
@@ -37,6 +37,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:text="Enviar notificaciones"
+        android:textColor="@color/textos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

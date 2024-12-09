@@ -1,16 +1,20 @@
 package com.example.cine.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cine.R
 import com.example.cine.controlador.AdapterHorarioPelicula
+import com.example.cine.controlador.AdapterReservasPelicula
 import com.example.cine.controlador.NotificationHelper
+import com.example.cine.controlador.NotificationHelper.Companion.sharedPrefFile
 import com.example.cine.controlador.Utils
 import com.example.cine.databinding.FragmentPeliculaDetalleBinding
 import com.example.cine.modelo.Horario
@@ -22,7 +26,6 @@ class DetalleFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recycler: RecyclerView
     private var pelicula: Pelicula? = null
-    private lateinit var notificationHelper: NotificationHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +41,25 @@ class DetalleFragment : Fragment() {
         // Configuramos el RecyclerView
         recycler = binding.horarioPeliculaRecycler
         recycler.layoutManager = LinearLayoutManager(context)
-        recycler.adapter = pelicula?.let { AdapterHorarioPelicula(it.horario) }
+
+        val sharedPreferences = context?.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val correo = sharedPreferences?.getString("user_email", null)
+
+        if (!correo.isNullOrEmpty()) {
+            recycler.adapter =
+                pelicula?.let {
+                    AdapterHorarioPelicula(
+                        it.horario,
+                        pelicula!!.tituloPelicula,
+                        correo
+                    )
+                }
+        } else {
+            // Manejar el caso donde el correo no está presente en las preferencias compartidas
+            Toast.makeText(context, "Correo no encontrado en preferencias", Toast.LENGTH_SHORT)
+                .show()
+        }
+
 
         // Asignamos los datos de la película a los TextViews
         pelicula?.let {
@@ -50,23 +71,10 @@ class DetalleFragment : Fragment() {
         }
 
         // Inicializamos el NotificationHelper con requireContext()
-        notificationHelper = NotificationHelper(requireContext())
-        notificationHelper.createNotificationChannel()
 
-        // Configuramos el botón de reserva
-        binding.buttonResevar.setOnClickListener {
-            pelicula?.let {
-                notificationHelper.showNotification(
-                    "Reserva ${it.tituloPelicula}",
-                    "Se ha reservado correctamente."
-                )
-            }
-        }
 
         return binding.root
     }
-
-
 
 
     // Método para limpiar recursos cuando el fragmento se destruye

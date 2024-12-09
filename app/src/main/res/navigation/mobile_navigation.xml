@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.cine.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Cartelera"
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.cine.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.cine.ui.slideshow.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_reserva" />
 
     <fragment
         android:id="@+id/nav_detalle_pelicula"
@@ -33,4 +33,10 @@
         android:name="com.example.cine.ui.home.AjustesFragment"
         android:label="Ajustes"
         tools:layout="@layout/fragment_ajustes" />
+
+    <fragment
+        android:id="@+id/nav_acerca"
+        android:name="com.example.cine.ui.home.AcercaFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_acercade" />
 </navigation>

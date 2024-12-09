@@ -39,14 +39,13 @@ class HomeFragment : Fragment() {
 
         recycler.adapter = AdapterPelicula(dbHelper.getPeliculas())
 
-
         return root
     }
 
     override fun onResume() {
         super.onResume()
         val root: View = binding.root
-        
+
         dbHelper = PeliculaDatabaseHelper(root.context)
 
     }

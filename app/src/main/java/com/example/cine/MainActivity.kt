@@ -62,6 +62,16 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.acerca -> {
+                Utils.nav.navigate(R.id.nav_acerca)
+                true
+            }
+
+            R.id.salir -> {
+                finishAffinity()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
